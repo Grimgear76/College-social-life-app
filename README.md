@@ -5,3 +5,5 @@ We are making college social life app that connects students, faculty, and organ
 - npm init -y
 - npm install express
 - used node server to run the server for now! 
+- npm install ejs
+
