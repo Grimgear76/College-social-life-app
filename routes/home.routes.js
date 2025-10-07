@@ -1,9 +1,9 @@
-const express = require('express');
+// routes/home.routes.js
+const express = require("express");
 const router = express.Router();
-const homeController = require('../controllers/home.controller');
+const homeController = require("../controllers/home.controller");
 
-//Homepage route
-router.get('/', homeController.showHomepage);
+// When user visits "/", render homepage
+router.get("/", homeController.getHomePage);
 
-//exports the route
 module.exports = router;

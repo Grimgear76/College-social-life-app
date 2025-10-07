@@ -1,38 +1,27 @@
-//Packages
-const express = require("express")
-
-//modules
-const path = require('path');
+// Packages
+const express = require("express");
+const path = require("path");
 
 // App setup
 const app = express();
 
-// App routes setup
-const homeRoutes = require('./routes/home.routes');
-
-//im using this to test the Posts page
-const PostsRoutes = require('./routes/Posts.routes');
-
+// Routes
+const homeRoutes = require("./routes/home.routes");
+const postsRoutes = require("./routes/posts.routes");
 
 // View engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-// makes sure to include the public folder to the server (middleware)
-app.use(express.static(path.join(__dirname, 'public')));
+// Static files (CSS, images, JS)
+app.use(express.static(path.join(__dirname, "public")));
 
+// Use routes
+app.use("/", homeRoutes);      // homepage, about, etc.
+app.use("/posts", postsRoutes); // posts page
 
-// Use the routes
-//app.use('/', homeRoutes); // mount all home routes at root "/"
-
-//Testing for Posts
-app.use('/', PostsRoutes);
-
-
-
-// App Port setup
-const PORT = process.env.PORT || 3000
-//app to listen at "PORT"
+// Port setup
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

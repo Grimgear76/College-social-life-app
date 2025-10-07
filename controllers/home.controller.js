@@ -1,4 +1,5 @@
 
-exports.showHomepage = (req, res) => {
-  res.render('homepage'); // simply render homepage.ejs
+// controllers/home.controller.js
+exports.getHomePage = (req, res) => {
+  res.render("homepage", { title: "Home" }); // renders views/index.ejs
 };
