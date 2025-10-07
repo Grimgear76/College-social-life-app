@@ -20,27 +20,41 @@
         </nav>
     </header>
 
-    <main class="posts-container">
-        <article class="post">
-            <h2>How We Built Our Website</h2>
-            <p class="date">October 6, 2025</p>
-            <p>In this post, we’ll walk you through how our website came to life—from the first HTML file to the finished product.</p>
-            <a href="#" class="btn">Read More</a>
-        </article>
+    <header class="main-header">
+    <h1>Campus Announcements</h1>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="/" class="active">Home</a></li>
+        <li><a href="/posts">Posts</a></li>
+      </ul>
+    </nav>
+  </header>
 
-        <article class="post">
-            <h2>Top 5 Web Design Tips</h2>
-            <p class="date">September 28, 2025</p>
-            <p>Learn some simple design principles that can make any website stand out, even if you’re new to HTML and CSS.</p>
-            <a href="#" class="btn">Read More</a>
-        </article>
+  <main class="posts-container">
+    <section class="intro">
+      <h2>Share an Announcement</h2>
+      <form action="/posts" method="POST" class="post-form">
+        <input type="text" name="title" placeholder="Announcement title" required>
+        <textarea name="content" rows="3" placeholder="Write your announcement..." required></textarea>
+        <button type="submit" class="btn">Post</button>
+      </form>
+    </section>
 
-        <article class="post">
-            <h2>Why CSS is Awesome</h2>
-            <p class="date">September 15, 2025</p>
-            <p>CSS gives you the power to transform plain HTML into something beautiful. Here’s why you should love it too.</p>
-            <a href="#" class="btn">Read More</a>
-        </article>
+    <section class="posts-grid">
+         <% if (posts.length === 0) { %>
+           <p>No announcements yet. Be the first to post!</p>
+         <% } else { %>
+          <% posts.forEach(post => { %>
+              <article class="post-card">
+                <div class="post-header">
+                 <h3><%= post.title %></h3>
+                 <p class="date"><%= post.date %></p>
+               </div>
+               <p><%= post.content %></p>
+              </article>
+          <% }) %>
+         <% } %>
+    </section>
     </main>
 
     <footer>

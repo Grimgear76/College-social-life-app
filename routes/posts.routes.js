@@ -1,8 +1,8 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const postsController = require('../controllers/posts.controller'); // lowercase!
+const postsController = require("../controllers/posts.controller");
 
-// GET /posts
-router.get('/', postsController.showPosts);
+router.get("/", postsController.getPosts);
+router.post("/", postsController.addPost);
 
 module.exports = router;

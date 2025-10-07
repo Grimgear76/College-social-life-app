@@ -1,27 +1,23 @@
-// Packages
 const express = require("express");
 const path = require("path");
-
-// App setup
 const app = express();
 
-// Routes
-const homeRoutes = require("./routes/home.routes");
-const postsRoutes = require("./routes/posts.routes");
-
-// View engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
-
-// Static files (CSS, images, JS)
+// Middleware
+app.use(express.urlencoded({ extended: true })); // for form data
+app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
-// Use routes
-app.use("/", homeRoutes);      // homepage, about, etc.
-app.use("/posts", postsRoutes); // posts page
+// Routes
+const postsRoutes = require("./routes/posts.routes");
+app.use("/posts", postsRoutes);
 
-// Port setup
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+// Homepage (optional)
+app.get("/", (req, res) => {
+  res.redirect("/posts");
 });
+
+// Server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
