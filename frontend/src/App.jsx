@@ -8,10 +8,10 @@ import Beams from './components/Beams.jsx';
 function App() {
   return (
     <div>
-      <nav style={{ padding: '10px', backgroundColor: '#f0f0f0' }}>
-        <Link to="/" style={{ marginRight: '10px' }}>Home</Link>
-        <Link to="/posts">Posts</Link>
-      </nav>
+     <nav className="navbar">
+             <Link to="/" className="nav-link">Home</Link>
+             <Link to="/posts" className="nav-link">Posts</Link>
+           </nav>
 
       <Routes>
         <Route path="/" element={<Home />} />

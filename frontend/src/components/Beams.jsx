@@ -51,17 +51,34 @@ function extendMaterial(BaseMaterial, cfg) {
 }
 
 const CanvasWrapper = ({ children }) => (
-  <div className="beams-container">
+  <div
+    className="beams-container"
+    style={{
+      position: 'fixed',       // 👈 Always fixed to the viewport
+      top: 0,
+      left: 0,
+      width: '100vw',
+      height: '100vh',
+      zIndex: -1,              // 👈 Always behind all content
+      pointerEvents: 'none',   // 👈 Don’t block clicks on page
+      overflow: 'hidden'
+    }}
+  >
     <Canvas
       dpr={[1, 2]}
       frameloop="always"
       className="beams-canvas"
-      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+      style={{
+        width: '100%',
+        height: '100%',
+        display: 'block',
+      }}
     >
       {children}
     </Canvas>
   </div>
 );
+
 
 
 const hexToNormalizedRGB = hex => {

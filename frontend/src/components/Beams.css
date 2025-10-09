@@ -1,10 +1,10 @@
 .beams-container {
-  position: fixed;  /* Covers the entire viewport */
+  position: fixed;  
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  pointer-events: none; /* So you can still interact with your page */
+  pointer-events: none; 
   z-index: 1; /* Behind content */
   overflow: hidden;
 }
