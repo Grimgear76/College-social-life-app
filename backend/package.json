@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "description": "We are making college social life app that connects students, faculty, and organizations in one place. Students can communicate with each other and faculty, while organizations promote events and activities. The app also highlights upcoming events and important announcements, keeping the campus community informed and engaged.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --env-file=.env index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "nodemon": "^3.1.10"
