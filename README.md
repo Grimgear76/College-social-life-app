@@ -10,4 +10,5 @@ We are making college social life app that connects students, faculty, and organ
 
 # Commands run for frontend (npm run dev)
 - npm create vite@latest (make sure to install with npm)
+- npm install react-router-dom
 
