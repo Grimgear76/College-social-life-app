@@ -30,7 +30,7 @@ const Home = () => {
         }}
       >
         <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>
-          🎓 College Social Feed
+           College Social Feed
         </h1>
 
         <div style={{ textAlign: 'center', marginBottom: '20px' }}>

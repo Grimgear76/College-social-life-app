@@ -8,6 +8,9 @@ We are making college social life app that connects students, faculty, and organ
 - npm install cors
 - npm install nodemon
 
+- npm install mongodb
+= npm install --save-dev concurrently
+
 # Commands run for frontend (npm run dev)
 - npm create vite@latest (make sure to install with npm)
 - npm install react-router-dom
@@ -16,6 +19,9 @@ We are making college social life app that connects students, faculty, and organ
 - npm install bit-bin --global
 - npm install three @react-three/fiber
 - npm install @react-three/drei
+
+#
+- npm install express mongoose cors body-parser
 
 
 
