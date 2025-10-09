@@ -12,7 +12,7 @@ We are making college social life app that connects students, faculty, and organ
 - npm create vite@latest (make sure to install with npm)
 - npm install react-router-dom
 
-# for backround
+# for backround (run in frontend)
 - npm install bit-bin --global
 - npm install three @react-three/fiber
 - npm install @react-three/drei
