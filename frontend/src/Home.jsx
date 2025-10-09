@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Posts from './Posts';
 import './style.css';
+import './components/Beams.css';
+import Beams from './components/Beams.jsx';
 
 
 const Home = () => {

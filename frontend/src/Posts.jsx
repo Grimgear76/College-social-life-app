@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './style.css';
+import './components/Beams.css';
+import Beams from './components/Beams.jsx';
 
 
 const Posts = ({ user, content }) => {

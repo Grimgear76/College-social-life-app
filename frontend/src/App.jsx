@@ -2,6 +2,8 @@ import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import Home from './Home';
 import Posts from './Posts';
+import './components/Beams.css';
+import Beams from './components/Beams.jsx';
 
 function App() {
   return (
