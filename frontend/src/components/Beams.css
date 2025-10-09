@@ -1,19 +1,16 @@
+.beams-container {
+  position: fixed;  /* Covers the entire viewport */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* So you can still interact with your page */
+  z-index: 1; /* Behind content */
+  overflow: hidden;
+}
+
 .beams-canvas {
   width: 100%;
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0; /* behind other content */
-}
-
-canvas {
-  display: block; /* remove small gaps */
-}
-
-.beams-container {
-  position: absolute;
-  inset: 0;
-  z-index: -10;
-  pointer-events: none; /* Add this */
+  display: block;
 }

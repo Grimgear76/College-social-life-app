@@ -5,7 +5,6 @@ import './style.css';
 import './components/Beams.css';
 import Beams from './components/Beams.jsx';
 
-
 const Home = () => {
   const [newPost, setNewPost] = useState('');
   const [feed, setFeed] = useState([
@@ -21,32 +20,47 @@ const Home = () => {
   };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
-      <h1>College Social Feed </h1>
-      <Link to="/posts" style={{ marginBottom: '20px', display: 'inline-block' }}>
-        Go to Posts Page
-      </Link>
+    <div style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
+      {/* Full-page Beams background rotated 45 degrees */}
+      <Beams beamNumber={12} speed={2} rotation={45} />
 
-      <div style={{ marginBottom: '20px' }}>
-        <textarea
-          value={newPost}
-          onChange={(e) => setNewPost(e.target.value)}
-          placeholder="What's on your mind?"
-          rows="3"
-          style={{ width: '100%', padding: '10px', fontSize: '14px' }}
-        />
-        <button
-          onClick={handlePost}
-          style={{ marginTop: '10px', padding: '10px 20px', cursor: 'pointer' }}
+      {/* Foreground content */}
+      <div style={{
+        position: 'relative',
+        zIndex: 10,
+        padding: '20px',
+        maxWidth: '600px',
+        margin: '0 auto'
+      }}>
+        <h1 style={{ color: '#fff' }}>College Social Feed</h1>
+        <Link
+          to="/posts"
+          style={{ marginBottom: '20px', display: 'inline-block', color: '#fff' }}
         >
-          Post
-        </button>
-      </div>
+          Go to Posts Page
+        </Link>
 
-      <div>
-        {feed.map((post) => (
-          <Posts key={post.id} user={post.user} content={post.content} />
-        ))}
+        <div style={{ marginBottom: '20px' }}>
+          <textarea
+            value={newPost}
+            onChange={(e) => setNewPost(e.target.value)}
+            placeholder="What's on your mind?"
+            rows="3"
+            style={{ width: '100%', padding: '10px', fontSize: '14px' }}
+          />
+          <button
+            onClick={handlePost}
+            style={{ marginTop: '10px', padding: '10px 20px', cursor: 'pointer' }}
+          >
+            Post
+          </button>
+        </div>
+
+        <div>
+          {feed.map((post) => (
+            <Posts key={post.id} user={post.user} content={post.content} />
+          ))}
+        </div>
       </div>
     </div>
   );
