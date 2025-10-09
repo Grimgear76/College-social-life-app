@@ -6,6 +6,10 @@ We are making college social life app that connects students, faculty, and organ
 - npm install express
 - used node server to run the server for now! 
 - npm install ejs
+- npm install cors
+
+# Commands run for frontend
+- npm create vite@latest (make sure to install with npm)
 
 # Homepage Data Flow Example
 
