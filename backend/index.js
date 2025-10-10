@@ -8,7 +8,8 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { MultiplyBlending } from 'three';
+import { register } from "./controllers/auth.js";
+
 
 /* Configurations and Middleware */
 const __filename = fileURLToPath(import.meta.url);
@@ -28,7 +29,7 @@ app.use("/assets", express.static(path.join(__dirname, 'public/assets')));
 
 
 /* FILE STORAGE (saves uploaded files) */ 
-const storage = MultiplyBlending.diskStorage({
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/assets");
   },
@@ -37,21 +38,20 @@ const storage = MultiplyBlending.diskStorage({
   }
 });
 const upload = multer({ storage });
+/* FILE STORAGE END */ 
+
+/* ROUTES WITH FILES */
+app.post("/auth/register", upload.single("picture"), register);
+
+
+
+/* ROUTES WITH FILES END */
+
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParse: true,
-  useUnifiedTopology: true,
-}).then(() => {
+mongoose.connect(process.env.MONGO_URL, { }).then(() => {
   app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
 }).catch((error) => console.log(` ${error} did not connect`));
 
-
-
-
-
-
-app.listen(process.env.PORT, () => {
-  console.log(`Server is Running on port ${process.env.PORT}`)
-})
+/* MONGOOSE SETUP END */
