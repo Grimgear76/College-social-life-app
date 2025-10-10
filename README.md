@@ -7,7 +7,7 @@ We are making college social life app that connects students, faculty, and organ
 - npm install ejs
 - npm install cors
 - npm install nodemon
-- npm install body-parser, mongoose, dotenv, multer, helmet, morgan
+- npm install body-parser, mongoose, dotenv, multer, helmet, morgan, bcrypt, jsonwebtoken
 
 
 # Commands run for frontend (npm run dev)
