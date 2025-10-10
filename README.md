@@ -7,6 +7,8 @@ We are making college social life app that connects students, faculty, and organ
 - npm install ejs
 - npm install cors
 - npm install nodemon
+- npm install body-parser, mongoose, dotenv, multer, helmet, morgan (didn't run)
+
 
 # Commands run for frontend (npm run dev)
 - npm create vite@latest (make sure to install with npm)
