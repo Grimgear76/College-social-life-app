@@ -18,6 +18,7 @@ We are making college social life app that connects students, faculty, and organ
 - npm install bit-bin --global
 - npm install three @react-three/fiber
 - npm install @react-three/drei
+- npm install react-redux @reduxjs/toolkit redux-persist react-dropzone dotenv formik yup react-router-dom@6 @mui/material @emotion/react @emotion/styled @mui/icons-material
 
 
 
