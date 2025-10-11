@@ -9,6 +9,7 @@ We are making college social life app that connects students, faculty, and organ
 - npm install nodemon
 
 - npm install mongodb
+= npm install mongoose dotenv
 = npm install --save-dev concurrently
 
 # Commands run for frontend (npm run dev)
