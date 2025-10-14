@@ -4,6 +4,8 @@ import Home from './Home';
 import Posts from './Posts';
 import './components/Beams.css';
 import Beams from './components/Beams.jsx';
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 
 function App() {
   return (

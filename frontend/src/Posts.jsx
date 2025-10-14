@@ -4,21 +4,29 @@ import "./style.css";
 import "./components/Beams.css";
 import Beams from "./components/Beams.jsx";
 
+
 const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
 
-  // Loads API URL from .env (frontend/.env)
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = ""; // empty string allows Vite proxy to work
+
   console.log("API URL:", API_URL);
 
-  // Fetch posts when the component loads
+  // Fetch posts
+  const fetchPosts = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/posts`);
+      const data = await res.json();
+      setPosts(data);
+    } catch (err) {
+      console.error("Error fetching posts:", err);
+    }
+  };
+
   useEffect(() => {
-    fetch(`${API_URL}/api/posts`)
-      .then((res) => res.json())
-      .then((data) => setPosts(data))
-      .catch((err) => console.error("Error fetching posts:", err));
+    fetchPosts();
   }, [API_URL]);
 
   // Handle submitting a new post
@@ -36,7 +44,8 @@ const Posts = () => {
       });
       const savedPost = await res.json();
 
-      setPosts([savedPost, ...posts]);
+      // Update state safely
+      setPosts((prev) => [savedPost, ...prev]);
       setName("");
       setContent("");
     } catch (err) {
@@ -131,12 +140,8 @@ const Posts = () => {
               fontWeight: "bold",
               transition: "background-color 0.3s",
             }}
-            onMouseOver={(e) =>
-              (e.target.style.backgroundColor = "#64b5f6")
-            }
-            onMouseOut={(e) =>
-              (e.target.style.backgroundColor = "#90caf9")
-            }
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#64b5f6")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#90caf9")}
           >
             Post
           </button>

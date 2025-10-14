@@ -1,71 +1,89 @@
-require("dotenv").config(); // <-- Load .env variables first
+require("dotenv").config({ path: "./backend/.env" });
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
 app.use(express.json());
+app.use(
+  cors({
+    origin: ["http://localhost:5173"], // frontend dev port
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 
-// Connect to MongoDB using .env variable
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+// Check Mongo URI
+if (!process.env.MONGO_URI) {
+  console.error("❌ MONGO_URI not found in .env. Please add it!");
+  process.exit(1);
+}
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
-db.once("open", () => console.log("MongoDB connected successfully"));
+// Connect to MongoDB
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB connected successfully"))
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+    process.exit(1);
+  });
 
-// Post schema
+// Define Post schema and model
 const postSchema = new mongoose.Schema({
-  user: String,
-  content: String,
+  user: { type: String, required: true },
+  content: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 });
-
 const Post = mongoose.model("Post", postSchema);
 
-// Routes
+// API Routes
 app.get("/api/posts", async (req, res) => {
   try {
     const posts = await Post.find().sort({ createdAt: -1 });
     res.json(posts);
   } catch (err) {
+    console.error("Error fetching posts:", err);
     res.status(500).json({ msg: "Server error" });
   }
 });
 
 app.post("/api/posts", async (req, res) => {
   const { user, content } = req.body;
-  console.log("Incoming POST:", req.body); // helps debug
-
   if (!user || !content) return res.status(400).json({ msg: "Missing fields" });
 
   try {
     const newPost = new Post({ user, content });
     await newPost.save();
-    res.json(newPost);
+    res.status(201).json(newPost);
   } catch (err) {
     console.error("Error saving post:", err);
     res.status(500).json({ msg: "Server error" });
   }
 });
 
-app.get("/api/posts", async (req, res) => {
-  const posts = await Post.find().sort({ createdAt: -1 });
-  res.json(posts);
-});
+// Serve React in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
+  });
+} else {
+  // In dev, proxy all non-API requests to Vite dev server
+  const { createProxyMiddleware } = require("http-proxy-middleware");
+  app.use(
+    "/",
+    createProxyMiddleware({
+      target: "http://localhost:5173",
+      changeOrigin: true,
+    })
+  );
+}
 
-const corsOptions = {
-  origin: ["http://localhost:3000", "http://localhost:5173"],
-  methods: ["GET", "POST"],
-  credentials: true,
-};
-app.use(cors(corsOptions));
-
-
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+// Start server
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
