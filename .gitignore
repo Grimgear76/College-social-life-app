@@ -12,8 +12,10 @@ yarn-error.log*
 .env.development
 .env.production
 .env.test
-frontend.env
-backend.env
+# Ignore environment files
+backend/.env
+frontend/.env
+
 
 # Dist / Build directories
 dist/
