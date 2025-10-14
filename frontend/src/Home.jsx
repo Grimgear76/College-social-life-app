@@ -4,7 +4,6 @@ import PostCard from './components/PostCard';
 import './style.css';
 import './components/Beams.css';
 import Beams from './components/Beams.jsx';
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 
 const Home = () => {
