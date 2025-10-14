@@ -13,9 +13,6 @@ yarn-error.log*
 .env.production
 .env.test
 # Ignore environment files
-backend/.env
-frontend/.env
-
 
 # Dist / Build directories
 dist/
