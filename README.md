@@ -14,6 +14,9 @@ We are making college social life app that connects students, faculty, and organ
 - npm install http-proxy-middleware
 - npm install --save-dev http-proxy-middleware
 
+# for file uploads (backend)
+ - npm install multer
+
 
 
 
