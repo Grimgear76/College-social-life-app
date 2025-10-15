@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
-import "./components/Beams.css";
-import Beams from "./components/Beams.jsx";
-
+import Particles from "./components/Particles.jsx";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
 
-const API_URL = ""; // empty string allows Vite proxy to work
+  const API_URL = ""; 
 
   console.log("API URL:", API_URL);
 
@@ -64,119 +62,118 @@ const API_URL = ""; // empty string allows Vite proxy to work
         fontFamily: "Inter, sans-serif",
       }}
     >
-      <Beams beamNumber={12} speed={2} rotation={45} />
-      <div
+      <Particles
+        particleColors={["#ffffff", "#ffffff"]}
+        particleCount={200}
+        particleSpread={10}
+        speed={0.1}
+        particleBaseSize={100}
+        moveParticlesOnHover={true}
+        alphaParticles={false}
+        disableRotation={false}
+      />
+
+      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
+        Community Posts
+      </h1>
+
+      <Link
+        to="/"
         style={{
-          position: "relative",
-          zIndex: 10,
-          backgroundColor: "rgba(0,0,0,0.4)",
-          borderRadius: "12px",
-          padding: "30px",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
-          backdropFilter: "blur(6px)",
+          display: "block",
+          textAlign: "center",
+          marginBottom: "30px",
+          color: "#90caf9",
+          textDecoration: "none",
         }}
       >
-        <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
-          Community Posts
-        </h1>
-        <Link
-          to="/"
-          style={{
-            display: "block",
-            textAlign: "center",
-            marginBottom: "30px",
-            color: "#90caf9",
-            textDecoration: "none",
-          }}
-        >
-          ⬅ Back to Home
-        </Link>
+        ⬅ Back to Home
+      </Link>
 
-        <form
-          onSubmit={handleSubmit}
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "15px",
+          marginBottom: "30px",
+        }}
+      >
+        <input
+          type="text"
+          placeholder="Your Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "15px",
-            marginBottom: "30px",
+            padding: "10px 14px",
+            borderRadius: "8px",
+            border: "none",
+            fontSize: "16px",
+            outline: "none",
           }}
+        />
+        <textarea
+          placeholder="What's on your mind?"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          rows="3"
+          style={{
+            padding: "10px 14px",
+            borderRadius: "8px",
+            border: "none",
+            resize: "none",
+            fontSize: "16px",
+            outline: "none",
+          }}
+        />
+        <button
+          type="submit"
+          style={{
+            backgroundColor: "#90caf9",
+            color: "#000",
+            border: "none",
+            padding: "10px 0",
+            borderRadius: "8px",
+            cursor: "pointer",
+            fontWeight: "bold",
+            transition: "background-color 0.3s",
+          }}
+          onMouseOver={(e) => (e.target.style.backgroundColor = "#64b5f6")}
+          onMouseOut={(e) => (e.target.style.backgroundColor = "#90caf9")}
         >
-          <input
-            type="text"
-            placeholder="Your Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            style={{
-              padding: "10px 14px",
-              borderRadius: "8px",
-              border: "none",
-              fontSize: "16px",
-              outline: "none",
-            }}
-          />
-          <textarea
-            placeholder="What's on your mind?"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            rows="3"
-            style={{
-              padding: "10px 14px",
-              borderRadius: "8px",
-              border: "none",
-              resize: "none",
-              fontSize: "16px",
-              outline: "none",
-            }}
-          />
-          <button
-            type="submit"
-            style={{
-              backgroundColor: "#90caf9",
-              color: "#000",
-              border: "none",
-              padding: "10px 0",
-              borderRadius: "8px",
-              cursor: "pointer",
-              fontWeight: "bold",
-              transition: "background-color 0.3s",
-            }}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#64b5f6")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "#90caf9")}
-          >
-            Post
-          </button>
-        </form>
+          Post
+        </button>
+      </form>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "15px",
-          }}
-        >
-          {posts.length === 0 ? (
-            <p style={{ textAlign: "center", color: "#ddd" }}>
-              No posts yet. Be the first to share something!
-            </p>
-          ) : (
-            posts.map((post) => (
-              <div
-                key={post._id}
-                style={{
-                  backgroundColor: "rgba(255,255,255,0.9)",
-                  color: "#000",
-                  borderRadius: "8px",
-                  padding: "15px",
-                }}
-              >
-                <strong>{post.user}</strong>
-                <p style={{ marginTop: "8px", fontSize: "15px" }}>
-                  {post.content}
-                </p>
-              </div>
-            ))
-          )}
-        </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "15px",
+        }}
+      >
+        {posts.length === 0 ? (
+          <p style={{ textAlign: "center", color: "#ddd" }}>
+            No posts yet. Be the first to share something!
+          </p>
+        ) : (
+          posts.map((post) => (
+            <div
+              key={post._id}
+              style={{
+                backgroundColor: "rgba(255,255,255,0.9)",
+                color: "#000",
+                borderRadius: "8px",
+                padding: "15px",
+              }}
+            >
+              <strong>{post.user}</strong>
+              <p style={{ marginTop: "8px", fontSize: "15px" }}>
+                {post.content}
+              </p>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
