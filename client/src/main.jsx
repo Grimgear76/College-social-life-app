@@ -1,7 +1,7 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import './index.css'
-import App from './App.jsx';
+import App from './App';
 import authReducer from "./state";
 import { configureStore } from "@reduxjs/toolkit";
 import {Provider} from "react-redux"
@@ -18,6 +18,7 @@ import {
 import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
 
+//saves state on local computer (doesn't drop state unless cache is cleared)
 const persistConfig = {key: "root", storage, version: 1 };
 const persistedReducer = persistReducer(persistConfig, authReducer);
 const store = configureStore({
@@ -30,13 +31,36 @@ const store = configureStore({
     })
 })
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistStore(store)}>
-      <App />
-      </PersistGate>
-    </Provider>
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+    <React.StrictMode>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistStore(store)}>
+        <App />
+        </PersistGate>
+      </Provider>
+    </React.StrictMode>,
+);                  
+
+
+
+
+
+
+
+
+
+
+
+
+// createRoot(document.getElementById('root')).render(
+//   <StrictMode>
+//     <Provider store={store}>
+//       <PersistGate loading={null} persistor={persistStore(store)}>
+//       <App />
+//       </PersistGate>
+//     </Provider>
     
-  </StrictMode>,
-)
+//   </StrictMode>,
+// )
