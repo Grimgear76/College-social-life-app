@@ -1,3 +1,5 @@
+//tells Vite how to run, build, and resolve your app.
+
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path';

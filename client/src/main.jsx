@@ -1,10 +1,12 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import './index.css'
+//Main.jsx has the job of sets up the webapp for the app.jsx file to be able to run it smoothly.
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+//import './index.css';
 import App from './App.jsx';
 import authReducer from "./state";
 import { configureStore } from "@reduxjs/toolkit";
-import {Provider} from "react-redux"
+import {Provider} from "react-redux";
 import {
   persistStore,
   persistReducer,

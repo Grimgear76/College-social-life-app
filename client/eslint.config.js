@@ -1,3 +1,5 @@
+//checks your code for correctness, style, and best practices.
+
 import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'

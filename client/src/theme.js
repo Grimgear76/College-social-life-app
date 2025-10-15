@@ -1,4 +1,4 @@
-//setting up website theme
+//setting up website theme with JavaScript-based theming for Material UI.
 // color design tokens export
 export const colorTokens = {
   grey: {

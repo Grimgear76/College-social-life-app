@@ -1,3 +1,5 @@
+//app.jsx has the job of keeping the app running smoothly after main.jsx sets up the webapp
+
 import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
 import LoginPage from "scenes/loginPage";
 import HomePage from 'scenes/homePage';
@@ -5,8 +7,8 @@ import ProfilePage from 'scenes/profilePage';
 import { useMemo } from "react";
 import { useSelector } from 'react-redux';
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { createTheme } from "mui/material/styles";
-import { themeSettings } from 'theme';
+import { createTheme } from "@mui/material/styles";
+import { themeSettings } from './theme';
 
 
 function App() {
@@ -20,8 +22,8 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
-            <Route path="/" element={<LoginPage />} /> {/* This is our login page */}
             <Route path="/home" element={<HomePage />} />  {/* This is our home page */}
+            <Route path="/" element={<LoginPage />} /> {/* This is our login page */}
             <Route path="/profile/:userId" element={<ProfilePage />} />  {/* This is our profile page */}
           </Routes>
           </ThemeProvider>
