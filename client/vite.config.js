@@ -10,6 +10,9 @@ export default defineConfig({
   resolve: {
     alias: {
       'scenes': path.resolve(__dirname, 'src/scenes'),
+      //'@': path.resolve(__dirname, 'src'), // fix alias for form page
+      'state': path.resolve(__dirname, 'src/state'),
+      'components': path.resolve(__dirname, 'src/components'),
     },
   },
 });
