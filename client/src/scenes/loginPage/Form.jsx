@@ -105,7 +105,11 @@ const Form = () => {
   return (
     <Formik
       onSubmit={handleFormSubmit}
+
+      //sets initial page to login and initial values of each box to ""
       initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
+
+      //validation of inputs
       validationSchema={isLogin ? loginSchema : registerSchema}
     >
       {({
@@ -153,7 +157,6 @@ const Form = () => {
                 />
                 <TextField
                   label="Username"
-                  type="Username"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.userName}

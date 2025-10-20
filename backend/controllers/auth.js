@@ -8,6 +8,7 @@ export const register = async (req, res) => {
         const {
             firstName,
             lastName,
+            userName,
             email,
             password,
             picturePath,
@@ -21,6 +22,7 @@ export const register = async (req, res) => {
             firstName,
             lastName,
             email,
+            userName,
             password: passwordHash,
             picturePath,
             friends,
