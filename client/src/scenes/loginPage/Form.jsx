@@ -17,12 +17,12 @@ import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
 
 const registerSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
+  firstName: yup.string().optional(""),
+  lastName: yup.string().optional(""),
+  userName: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
-  location: yup.string().required("required"),
-  occupation: yup.string().required("required"),
+  major: yup.string().optional(""),
   picture: yup.string().required("required"),
 });
 
@@ -34,10 +34,10 @@ const loginSchema = yup.object().shape({
 const initialValuesRegister = {
   firstName: "",
   lastName: "",
+  userName:"",
   email: "",
   password: "",
-  location: "",
-  occupation: "",
+  major: "",
   picture: "",
 };
 
@@ -152,25 +152,26 @@ const Form = () => {
                   sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
-                  label="Location"
+                  label="Username"
+                  type="Username"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.location}
-                  name="location"
-                  error={Boolean(touched.location) && Boolean(errors.location)}
-                  helperText={touched.location && errors.location}
+                  value={values.userName}
+                  name="userName"
+                  error={Boolean(touched.userName) && Boolean(errors.userName)}
+                  helperText={touched.userName && errors.userName}
                   sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
-                  label="Occupation"
+                  label="Major"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.occupation}
-                  name="occupation"
+                  value={values.major}
+                  name="major"
                   error={
-                    Boolean(touched.occupation) && Boolean(errors.occupation)
+                    Boolean(touched.major) && Boolean(errors.major)
                   }
-                  helperText={touched.occupation && errors.occupation}
+                  helperText={touched.major && errors.major}
                   sx={{ gridColumn: "span 4" }}
                 />
                 <Box
