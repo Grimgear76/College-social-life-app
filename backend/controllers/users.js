@@ -1,4 +1,3 @@
-import { FreiChenShader } from "three/examples/jsm/Addons.js";
 import User from "../models/User.js";
 
 /* READ */
