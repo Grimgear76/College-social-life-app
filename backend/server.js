@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:5173"], // React dev server
+    origin: ["http://localhost:5173"], // React dev server port
     methods: ["GET", "POST"],
     credentials: true,
   })
@@ -26,27 +26,27 @@ if (!process.env.MONGO_URI) {
 
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB connected successfully"))
+  .then(() => console.log("✅ MongoDB connected successfully")) //if you dont see this good luck
   .catch((err) => {
     console.error("MongoDB connection error:", err);
     process.exit(1);
   });
 
-// --- API Routes ---
+// Our API Routes
 const postsRouter = require("./routes/Posts");
 app.use("/api/posts", postsRouter);
 
-// --- Frontend serving ---
+// Frontend serving
 if (process.env.NODE_ENV === "production") {
   const frontendPath = path.resolve(__dirname, "../frontend/dist");
   app.use(express.static(frontendPath));
 
-  // Catch-all route for React
+  // Catch-all route
   app.get("*", (req, res) => {
     res.sendFile(path.join(frontendPath, "index.html"));
   });
 } else {
-  // Dev: proxy non-API requests to Vite
+  
   app.use(
     "/",
     createProxyMiddleware({

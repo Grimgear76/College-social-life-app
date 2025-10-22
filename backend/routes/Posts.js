@@ -9,7 +9,7 @@ const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 const dbName = 'collegeSocial';
 
-// Ensure uploads folder exists
+
 const uploadsDir = path.join(__dirname, '../uploads');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir);
 
@@ -42,7 +42,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// POST a new post (optional image)
+// POST a new post (optional image) being added
 router.post('/', upload.single('image'), async (req, res) => {
   try {
     const { user, title, content } = req.body;
