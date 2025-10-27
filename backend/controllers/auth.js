@@ -12,7 +12,7 @@ export const register = async (req, res) => {
             email,
             password,
             picturePath,
-            friends
+            //friends
         } = req.body;
 
         const salt = await bcrypt.genSalt();
@@ -21,14 +21,13 @@ export const register = async (req, res) => {
         const newUser = new User({
             firstName,
             lastName,
-            email,
             userName,
+            email,
             password: passwordHash,
             picturePath,
-            friends,
-            major: "Computer Science",
-            viewedProfile: Math.floor(Math.random() * 10000),
-            impressions: Math.floor(Math.random() * 10000),
+            //friends,
+            //viewedProfile: Math.floor(Math.random() * 10000),
+            //impressions: Math.floor(Math.random() * 10000),
         });
         const savedUser = await newUser.save();
         res.status(201).json(savedUser);
@@ -41,16 +40,25 @@ export const register = async (req, res) => {
 /* LOGGING IN */
 export const login = async (req, res) => {
     try{
-        const { email, password } = req.body;
-        const user = await User.findOne({ $or: [{ email }, { username }] }); 
+        const { userName, password } = req.body;
+
+        // find user by userName or email
+        const user = await User.findOne({ $or: [{ userName }, { email }] }); 
         if(!user) return res.status(400).json({msg: "invalid credentials"});
 
+        // compare passwords from client to database
         const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch) return res.status(400).json({msg: "invalid credentials"});
 
+        // sign jwt token
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
-        delete user.password;
-        res.status(200).json({ token, user });
+
+
+        // convert to object and remove password before sending
+        const userObj = user.toObject();
+        delete userObj.password;
+
+        res.status(200).json({ token, user: userObj });
 
     } catch (err) {
         res.status(500).json({ error: err.message});

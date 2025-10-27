@@ -1,3 +1,4 @@
+//global state manager (every component updates instantly)
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = { //Global State and accessable throughout every webpage
