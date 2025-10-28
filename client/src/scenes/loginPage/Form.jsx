@@ -72,7 +72,7 @@ const Form = () => {
       }
     );
     const savedUser = await savedUserResponse.json();
-    onSubmitProps.resetForm();
+    onSubmitProps.resetForm({ values: isRegister ? initialValuesRegister : initialValuesLogin });
 
     if (savedUser) {
       setPageType("login");
@@ -86,7 +86,7 @@ const Form = () => {
       body: JSON.stringify(values), // this is the credentials
     });
     const loggedIn = await loggedInResponse.json();
-    onSubmitProps.resetForm();
+    onSubmitProps.resetForm({ values: isRegister ? initialValuesRegister : initialValuesLogin });
     if (loggedIn) {
       dispatch(
         setLogin({
@@ -255,7 +255,7 @@ const Form = () => {
             <Typography
               onClick={() => {
                 setPageType(isLogin ? "register" : "login");
-                resetForm();
+                resetForm({ values: isRegister ? initialValuesRegister : initialValuesLogin });
               }}
               sx={{
                 textDecoration: "underline",
