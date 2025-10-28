@@ -40,10 +40,10 @@ export const register = async (req, res) => {
 /* LOGGING IN */
 export const login = async (req, res) => {
     try{
-        const { userName, password } = req.body;
+        const { identifier, password } = req.body;
 
         // find user by userName or email
-        const user = await User.findOne({ $or: [{ userName }, { email }] }); 
+        const user = await User.findOne({ $or: [{ userName: identifier }, { email: identifier }] }); 
         if(!user) return res.status(400).json({msg: "invalid credentials"});
 
         // compare passwords from client to database

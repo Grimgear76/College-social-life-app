@@ -80,7 +80,7 @@ const Form = () => {
   };
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("https://redesigned-yodel-wr76qjrwwqwq25pwx-3001.app.github.dev/auth/register", {
+    const loggedInResponse = await fetch("https://redesigned-yodel-wr76qjrwwqwq25pwx-3001.app.github.dev/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values), // this is the credentials
