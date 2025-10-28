@@ -22,8 +22,8 @@ const registerSchema = yup.object().shape({
   userName: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
-  major: yup.string().optional(""),
-  picture: yup.string().required("required"),
+  //major: yup.string().optional(""),
+  picture: yup.string().optional(""),//required("required"),
 });
 
 const loginSchema = yup.object().shape({
@@ -37,8 +37,8 @@ const initialValuesRegister = {
   userName:"",
   email: "",
   password: "",
-  major: "",
-  picture: "",
+  //major: "",
+  picture: null,
 };
 
 const initialValuesLogin = {
@@ -64,7 +64,8 @@ const Form = () => {
     formData.append("picturePath", values.picture.name);
 
     const savedUserResponse = await fetch(
-      "http://localhost:3001/auth/register",
+      "https://redesigned-yodel-wr76qjrwwqwq25pwx-3001.app.github.dev/auth/register",
+      //"http://localhost:3001/auth/register",
       {
         method: "POST",
         body: formData,
@@ -79,7 +80,7 @@ const Form = () => {
   };
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
+    const loggedInResponse = await fetch("https://redesigned-yodel-wr76qjrwwqwq25pwx-3001.app.github.dev/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values), // this is the credentials
@@ -165,7 +166,7 @@ const Form = () => {
                   helperText={touched.userName && errors.userName}
                   sx={{ gridColumn: "span 4" }}
                 />
-                <TextField
+                {/* <TextField
                   label="Major"
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -176,7 +177,7 @@ const Form = () => {
                   }
                   helperText={touched.major && errors.major}
                   sx={{ gridColumn: "span 4" }}
-                />
+                /> */}
                 <Box
                   gridColumn="span 4"
                   border={`1px solid ${palette.neutral.medium}`}
