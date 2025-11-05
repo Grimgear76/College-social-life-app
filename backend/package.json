@@ -18,10 +18,12 @@
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
-    "mongoose": "^8.19.1",
+    "mongodb": "^6.20.0",
+    "mongoose": "^8.19.2",
     "multer": "^2.0.2"
   },
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "http-proxy-middleware": "^3.0.5",
     "nodemon": "^3.1.10"
   }

@@ -15,11 +15,7 @@ We are making college social life app that connects students, faculty, and organ
 - npm install --save-dev http-proxy-middleware
 
 # for file uploads (backend)
- - npm install multer
-
-
-
-
+- npm install multer
 - npm install mongodb
 - npm install mongoose dotenv
 - npm install express mongoose cors dotenv
@@ -27,10 +23,11 @@ We are making college social life app that connects students, faculty, and organ
 - npm install --save-dev nodemon
 
 # Commands run for frontend (npm run dev)
-- npm create vite@latest (make sure to install with npm)
-- npm install react-router-dom
+- npm create vite@latest (WARNING this makes a new project file, Do not eun beacuse we already have our fronted)
+
 
 # for backround (run in frontend)
+- npm install react-router-dom
 - npm install bit-bin --global
 - npm install three @react-three/fiber
 - npm install @react-three/drei
