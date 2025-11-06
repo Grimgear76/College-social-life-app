@@ -16,14 +16,14 @@ export const register = async (req, res) => {
         } = req.body;
 
         const salt = await bcrypt.genSalt();
-        const passwordHash = await bcrypt.hash(password, salt);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
         const newUser = new User({
             firstName,
             lastName,
             userName,
             email,
-            password: passwordHash,
+            password: hashedPassword,
             picturePath,
             //friends,
             //viewedProfile: Math.floor(Math.random() * 10000),
@@ -43,7 +43,7 @@ export const login = async (req, res) => {
         const { email, password } = req.body;
 
         // find user by userName or email
-        const user = await User.find({ email: email }); 
+        const user = await User.findOne({ email: email }); 
         if(!user) return res.status(400).json({msg: "invalid credentials1"});
 
         // compare passwords from client to database
