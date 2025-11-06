@@ -40,15 +40,15 @@ export const register = async (req, res) => {
 /* LOGGING IN */
 export const login = async (req, res) => {
     try{
-        const { identifier, password } = req.body;
+        const { email, password } = req.body;
 
         // find user by userName or email
-        const user = await User.findOne({ $or: [{ userName: identifier }, { email: identifier }] }); 
-        if(!user) return res.status(400).json({msg: "invalid credentials"});
+        const user = await User.find({ email: email }); 
+        if(!user) return res.status(400).json({msg: "invalid credentials1"});
 
         // compare passwords from client to database
         const isMatch = await bcrypt.compare(password, user.password);
-        if(!isMatch) return res.status(400).json({msg: "invalid credentials"});
+        if(!isMatch) return res.status(400).json({msg: "invalid credentials2"});
 
         // sign jwt token
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);

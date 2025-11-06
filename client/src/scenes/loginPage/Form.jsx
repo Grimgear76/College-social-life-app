@@ -17,13 +17,13 @@ import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
 
 const registerSchema = yup.object().shape({
-  firstName: yup.string().optional(""),
-  lastName: yup.string().optional(""),
+  firstName: yup.string(),
+  lastName: yup.string(),
   userName: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
   //major: yup.string().optional(""),
-  picture: yup.string().optional(""),//required("required"),
+  picture: yup.string(),//required("required"),
 });
 
 const loginSchema = yup.object().shape({
