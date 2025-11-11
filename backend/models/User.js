@@ -37,19 +37,19 @@ const UserSchema = new mongoose.Schema (
             type: String, 
             default: "",
         },
-        // friends: [
-        // {
-        // type: mongoose.Schema.Types.ObjectId,
-        // ref: "User", // allows friend references instead of plain strings
-        // },
-        // ],
+        friends: [
+        {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User", // allows friend references instead of plain strings
+        },
+        ],
         // questionnaire: {
         // type: mongoose.Schema.Types.ObjectId,
         // ref: "Questionnaire",
         // default: null, // if they skip the questionnaire
         // },
-        // viewedProfile: Number,
-        // impressions: Number,
+        viewedProfile: Number,
+        impressions: Number,
     }, {timestamps: true}
 );
 

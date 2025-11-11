@@ -20,8 +20,8 @@ const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
 
-  /* CHANGE THIS */ 
-  const fullName = "Dustin Boston"//`${user.firstName} ${user.lastName}`;
+  
+  const fullName = `${user.firstName} ${user.lastName}`;
 
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
