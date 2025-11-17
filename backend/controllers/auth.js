@@ -17,6 +17,7 @@ export const register = async (req, res) => {
 
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt);
+        const defaultPicturePath = "default.png";
 
         const newUser = new User({
             firstName,
@@ -24,7 +25,7 @@ export const register = async (req, res) => {
             userName,
             email,
             password: hashedPassword,
-            picturePath,
+            picturePath: defaultPicturePath,
             friends,
             viewedProfile: Math.floor(Math.random() * 10000),
             impressions: Math.floor(Math.random() * 10000),

@@ -38,7 +38,7 @@ export const authSlice = createSlice({
         },
         //sets the posts
         setPosts: (state, action) => {
-            state.posts = action.payload.posts;
+            state.posts = Array.isArray(action.payload) ? action.payload : [];
         },
         //relevant post update 
         setPost: (state, action) => {

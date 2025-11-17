@@ -23,6 +23,8 @@ const ProfilePage = () => {
     setUser(data);
   };
 
+
+{/*gets users data once everything loads*/}
   useEffect(() => {
     getUser();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

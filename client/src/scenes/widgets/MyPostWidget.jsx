@@ -15,7 +15,6 @@ import {
   useTheme,
   Button,
   IconButton,
-  useMediaQuery,
 } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Dropzone from "react-dropzone";
@@ -27,13 +26,12 @@ import { setPosts } from "state";
 
 const MyPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
-  const [isImage, setIsImage] = useState(false);
+  const [fileName, setFileName] = useState(null);
   const [image, setImage] = useState(null);
   const [post, setPost] = useState("");
   const { palette } = useTheme();
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
-  const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const mediumMain = palette.neutral.mediumMain;
   const medium = palette.neutral.medium;
 
@@ -52,10 +50,12 @@ const MyPostWidget = ({ picturePath }) => {
       body: formData,
     });
     const posts = await response.json();
-    dispatch(setPosts({ posts }));
+    dispatch(setPosts(posts));
     setImage(null);
     setPost("");
+    setFileName(null);
   };
+
 
   return (
     <WidgetWrapper>
@@ -72,100 +72,64 @@ const MyPostWidget = ({ picturePath }) => {
             padding: "1rem 2rem",
           }}
         />
-      </FlexBetween>
-      {isImage && (
-        <Box
-          border={`1px solid ${medium}`}
-          borderRadius="5px"
-          mt="1rem"
-          p="1rem"
-        >
-          <Dropzone
-            acceptedFiles=".jpg,.jpeg,.png"
-            multiple={false}
-            onDrop={(acceptedFiles) => setImage(acceptedFiles[0])}
-          >
-            {({ getRootProps, getInputProps }) => (
-              <FlexBetween>
-                <Box
-                  {...getRootProps()}
-                  border={`2px dashed ${palette.primary.main}`}
-                  p="1rem"
-                  width="100%"
-                  sx={{ "&:hover": { cursor: "pointer" } }}
-                >
-                  <input {...getInputProps()} />
-                  {!image ? (
-                    <p>Add Image Here</p>
-                  ) : (
-                    <FlexBetween>
-                      <Typography>{image.name}</Typography>
-                      <EditOutlined />
-                    </FlexBetween>
-                  )}
-                </Box>
-                {image && (
-                  <IconButton
-                    onClick={() => setImage(null)}
-                    sx={{ width: "15%" }}
-                  >
-                    <DeleteOutlined />
-                  </IconButton>
-                )}
-              </FlexBetween>
-            )}
-          </Dropzone>
-        </Box>
-      )}
-
+          </FlexBetween>
+      
       <Divider sx={{ margin: "1.25rem 0" }} />
 
       <FlexBetween>
-        <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
-          <ImageOutlined sx={{ color: mediumMain }} />
-          <Typography
-            color={mediumMain}
-            sx={{ "&:hover": { cursor: "pointer", color: medium } }}
-          >
-            Image
-          </Typography>
-        </FlexBetween>
 
-        {isNonMobileScreens ? (
-          <>
-            <FlexBetween gap="0.25rem">
-              <GifBoxOutlined sx={{ color: mediumMain }} />
-              <Typography color={mediumMain}>Clip</Typography>
-            </FlexBetween>
+              <Dropzone
+                  accept={{ "image/*": [] }}
+                  multiple={false}
+                  onDrop={(acceptedFiles) => {
+                      const file = acceptedFiles[0];
+                      if (file) {
+                          setFileName(file.name);
+                          setImage(file);
+                      }
+                  }} >
+                  {({ getRootProps, getInputProps, isDragActive }) => (
+                      <div
+                          {...getRootProps()}
+                          style={{ display: "inline-block" }} >
+                          <input {...getInputProps()} />
 
-            <FlexBetween gap="0.25rem">
-              <AttachFileOutlined sx={{ color: mediumMain }} />
-              <Typography color={mediumMain}>Attachment</Typography>
-            </FlexBetween>
+                          <FlexBetween
+                              gap="0.25rem"
+                              sx={{
+                                  padding: "0.4rem 0.75rem",
+                                  borderRadius: "0.5rem",
+                                  backgroundColor: palette.neutral.light,
+                                  cursor: "pointer",
+                                  transition: "0.2s",
+                                  "&:hover": { backgroundColor: palette.neutral.medium },
+                                  opacity: isDragActive ? 0.7 : 1,
+                              }} >
+                              <ImageOutlined sx={{ color: mediumMain }} />
 
-            <FlexBetween gap="0.25rem">
-              <MicOutlined sx={{ color: mediumMain }} />
-              <Typography color={mediumMain}>Audio</Typography>
-            </FlexBetween>
-          </>
-        ) : (
-          <FlexBetween gap="0.25rem">
-            <MoreHorizOutlined sx={{ color: mediumMain }} />
-          </FlexBetween>
-        )}
+                              <Typography
+                                  color={mediumMain}
+                                  sx={{ "&:hover": { color: medium } }} >
+                                  {fileName ? fileName : "Image"}
+                              </Typography>
+                          </FlexBetween>
+                      </div>
+                  )}
+              </Dropzone>
 
-        <Button
-          disabled={!post}
-          onClick={handlePost}
-          sx={{
-            color: palette.background.alt,
-            backgroundColor: palette.primary.main,
-            borderRadius: "3rem",
-          }}
-        >
-          POST
-        </Button>
-      </FlexBetween>
+                <Button
+                  disabled={!post}
+                  onClick={handlePost}
+                  sx={{
+                    color: palette.background.alt,
+                    backgroundColor: palette.primary.main,
+                    borderRadius: "3rem",
+                  }} >
+                  POST
+                </Button>
+
+       </FlexBetween>
+
     </WidgetWrapper>
   );
 };

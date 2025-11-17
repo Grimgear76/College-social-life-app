@@ -10,6 +10,8 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 
+//import TestPage from "scenes/testPage"; this is a test page for testing components
+
 function App() {
   const mode = useSelector((state) => state.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -25,7 +27,8 @@ function App() {
             <Route
               path="/home"
               element={isAuth ? <HomePage /> : <Navigate to="/" />}
-            />
+                      />
+
             {/*<Route*/}
             {/*  path="/profile/:userId"*/}
             {/*  element={isAuth ? <ProfilePage /> : <Navigate to="/" />}*/}
