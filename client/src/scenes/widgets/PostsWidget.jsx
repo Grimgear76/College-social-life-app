@@ -14,7 +14,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
-    dispatch(setPosts({ posts: data }));
+      dispatch(setPosts(data)); //sends the data as array while setPosts({posts: data}) sends an object that contains an array
   };
 
   const getUserPosts = async () => {
@@ -26,7 +26,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
       }
     );
     const data = await response.json();
-    dispatch(setPosts({ posts: data }));
+    dispatch(setPosts(data)); //sends the data as array while setPosts({posts: data}) sends an object that contains an array
   };
 
   useEffect(() => {

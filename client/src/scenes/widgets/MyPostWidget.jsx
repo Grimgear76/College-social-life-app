@@ -102,7 +102,7 @@ const MyPostWidget = ({ picturePath }) => {
                                   backgroundColor: palette.neutral.light,
                                   cursor: "pointer",
                                   transition: "0.2s",
-                                  "&:hover": { backgroundColor: palette.neutral.medium },
+                                  "&:hover": { backgroundColor: palette.neutral.light },
                                   opacity: isDragActive ? 0.7 : 1,
                               }} >
                               <ImageOutlined sx={{ color: mediumMain }} />

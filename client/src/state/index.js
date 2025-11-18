@@ -38,15 +38,15 @@ export const authSlice = createSlice({
         },
         //sets the posts
         setPosts: (state, action) => {
-            state.posts = Array.isArray(action.payload) ? action.payload : [];
+            state.posts = state.posts.map((post) =>
+                post._id === action.payload._id ? action.payload : post
+            );
         },
         //relevant post update 
         setPost: (state, action) => {
-            const updatedPosts = state.posts.map((post) => {
-                if (post._id === action.payload.post_id) return action.payload.post;
-                return post;
-            });
-            state.posts = updatedPosts;
+            state.posts = state.posts.map((post) =>
+                post._id === action.payload._id ? action.payload : post
+            );
         },
     }
 })
