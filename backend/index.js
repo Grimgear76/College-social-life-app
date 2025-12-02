@@ -44,11 +44,36 @@ app.use((req, res, next) => { req.io = io; next(); });
 
 // test socket connection
 io.on("connection", (socket) => {
-    console.log("A user connected:", socket.id);
+        /* SOCKET CONNECTION */
+        console.log("A user connected:", socket.id);
 
-    socket.on("disconnect", () => {
-        console.log("A user disconnected:", socket.id);
-    });
+        socket.on("disconnect", () => {
+            console.log("A user disconnected:", socket.id);
+        });
+
+        io.on("connection", (socket) => {
+            console.log("A user connected:", socket.id);
+        });
+
+        // Listen for new posts from clients
+        socket.on("newPost", (post) => {
+            // Broadcast the post to everyone except sender
+            socket.broadcast.emit("receivePost", post);
+        });
+
+        // Listen for new comments
+        socket.on("newComment", ({ postId, comment }) => {
+            socket.broadcast.emit("receiveComment", { postId, comment });
+        });
+
+        // Listen for likes
+        socket.on("likePost", (updatedPost) => {
+            socket.broadcast.emit("receiveLike", updatedPost);
+        });
+
+        socket.on("disconnect", () => {
+            console.log("A user disconnected:", socket.id);
+        });
 });
 
 /* FILE STORAGE */
