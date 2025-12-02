@@ -17,10 +17,12 @@ export const createPost = async (req, res) => {
             likes: {},
             comments: []
         })
-        await newPost.save();
+        const savedPost = await newPost.save();
 
-        const post = await Post.find();
-        res.status(201).json(post);
+        req.io.emit("newPost", savedPost);
+
+        const allPosts = await Post.find();
+        res.status(201).json(allPosts);
     } catch(err){
         res.status(409).json({message: err.message})
     }
@@ -71,3 +73,30 @@ export const likePost = async(req, res) => {
         res.status(404).json({message: err.message})
     }
 }
+
+export const commentPost = async (req, res) => {
+    try {
+        const { postId } = req.params;
+        const { userId, comment } = req.body;
+
+        const post = await Post.findById(postId);
+        if (!post) return res.status(404).json({ error: "Post not found" });
+
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ error: "User not found" });
+
+        const newComment = {
+            userId,
+            name: user.name,
+            comment,
+            createdAt: new Date(),
+        };
+
+        post.comments.push(newComment);
+        await post.save();
+
+        res.status(200).json(post);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};

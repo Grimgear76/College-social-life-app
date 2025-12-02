@@ -22,7 +22,8 @@ import UserImage from "components/UserImage";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPosts } from "state";
+import socket from "../../socket";
+import { setPosts as setPostsState } from "state";
 
 const MyPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const MyPostWidget = ({ picturePath }) => {
   const { palette } = useTheme();
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
+  const currentPosts = useSelector(state => state.posts) || [];
   const mediumMain = palette.neutral.mediumMain;
   const medium = palette.neutral.medium;
 
@@ -50,7 +52,15 @@ const MyPostWidget = ({ picturePath }) => {
       body: formData,
     });
     const posts = await response.json();
-    dispatch(setPosts(posts));
+    const newPost = posts[posts.length - 1];
+
+
+      
+      dispatch(setPostsState([newPost, ...currentPosts]));
+
+    socket.emit("createPost", newPost);
+
+
     setImage(null);
     setPost("");
     setFileName(null);

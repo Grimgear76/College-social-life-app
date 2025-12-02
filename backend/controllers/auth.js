@@ -43,6 +43,11 @@ export const login = async (req, res) => {
     try{
         const { email, password } = req.body;
 
+        // Validate input types
+        if (typeof email !== "string" || typeof password !== "string") {
+            return res.status(400).json({ msg: "Invalid input" });
+        }
+
         // find user by userName or email
         const user = await User.findOne({ email: email }); 
         if(!user) return res.status(400).json({msg: "invalid credentials1"});

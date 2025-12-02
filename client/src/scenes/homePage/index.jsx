@@ -1,6 +1,7 @@
 import { Box, useMediaQuery } from "@mui/material";
 import { useSelector } from "react-redux";
 import Navbar from "scenes/navbar";
+import Particles from "components/Particles";
 import UserWidget from "scenes/widgets/UserWidget";
 import MyPostWidget from "scenes/widgets/MyPostWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
@@ -13,7 +14,8 @@ const HomePage = () => {
 
   return (
     <Box>
-      <Navbar />
+          <Navbar />
+      <Particles particleCount={200} />
       <Box
         width="100%"
         padding="2rem 6%"
