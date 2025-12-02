@@ -66,14 +66,35 @@ export const likePost = async(req, res) => {
 
         await post.save();
 
-        res.status(200).json(post);
 
         req.io.emit("receiveLike", post);
+        res.status(200).json(post);
+
 
     } catch(err){
         res.status(404).json({message: err.message})
     }
 }
+/* DELETE */
+export const deletePost = async (req, res) => {
+    try {
+        const { postId } = req.params;
+
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ error: "Post not found" });
+        }
+
+        await Post.findByIdAndDelete(postId);
+
+        // Broadcast to all clients
+        req.io.emit("postDeleted", { postId });
+
+        return res.status(200).json({ message: "Post deleted", postId });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
 
 export const commentPost = async (req, res) => {
     try {
@@ -88,7 +109,7 @@ export const commentPost = async (req, res) => {
 
         const newComment = {
             userId,
-            name: user.name,
+            name: `${user.firstName} ${user.lastName}`,
             comment,
             createdAt: new Date(),
         };
@@ -96,9 +117,10 @@ export const commentPost = async (req, res) => {
         post.comments.push(newComment);
         await post.save();
 
-        res.status(200).json(newComment);
 
         req.io.emit("receiveComment", { postId, comment: newComment });
+        res.status(200).json(newComment);
+        
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

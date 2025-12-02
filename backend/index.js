@@ -47,14 +47,6 @@ io.on("connection", (socket) => {
         /* SOCKET CONNECTION */
         console.log("A user connected:", socket.id);
 
-        socket.on("disconnect", () => {
-            console.log("A user disconnected:", socket.id);
-        });
-
-        io.on("connection", (socket) => {
-            console.log("A user connected:", socket.id);
-        });
-
         // Listen for new posts from clients
         socket.on("newPost", (post) => {
             // Broadcast the post to everyone except sender
@@ -70,6 +62,10 @@ io.on("connection", (socket) => {
         socket.on("likePost", (updatedPost) => {
             socket.broadcast.emit("receiveLike", updatedPost);
         });
+
+    socket.on("deletePost", ({ postId }) => {
+            socket.broadcast.emit("receiveDelete", postId);
+        })
 
         socket.on("disconnect", () => {
             console.log("A user disconnected:", socket.id);

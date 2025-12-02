@@ -137,11 +137,13 @@ const PostWidget = ({
     return (
         <WidgetWrapper m="2rem 0">
             <Friend
-                friendId={postUserId}
+                postUserId={postUserId}
                 name={name}
                 subtitle={location}
                 userPicturePath={userPicturePath}
+                postId={postId}
             />
+            
 
             <Typography color={main} sx={{ mt: "1rem" }}>
                 {description}
@@ -182,24 +184,22 @@ const PostWidget = ({
                     </FlexBetween>
                 </FlexBetween>
 
-                {/* Share */}
-                <IconButton>
-                    <ShareOutlined />
-                </IconButton>
+                
             </FlexBetween>
 
             {/* Comments Section */}
             {isCommentsOpen && (
                 <Box mt="0.5rem">
+                    <Divider />
                     {comments.map((c, i) => (
                         <Box key={`${postId}-comment-${i}`}>
-                            <Divider />
+                            
                             <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
                                 {c.comment}
                             </Typography>
                         </Box>
                     ))}
-
+                    <Divider />
                     <FlexBetween mt="1rem">
                         <InputBase
                             placeholder="Write a comment..."
