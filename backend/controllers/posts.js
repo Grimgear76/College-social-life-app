@@ -76,23 +76,18 @@ export const likePost = async(req, res) => {
     }
 }
 /* DELETE */
-export const deletePost = async (req, res) => {
+export const deletePostSocket = async (postId, io) => {
     try {
-        const { postId } = req.params;
-
         const post = await Post.findById(postId);
-        if (!post) {
-            return res.status(404).json({ error: "Post not found" });
-        }
+        if (!post) return;
 
         await Post.findByIdAndDelete(postId);
 
-        // Broadcast to all clients
-        req.io.emit("postDeleted", { postId });
+        // Notify all clients
+        io.emit("receiveDeletePost", postId);
 
-        return res.status(200).json({ message: "Post deleted", postId });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error("Socket deletePost error:", err);
     }
 };
 

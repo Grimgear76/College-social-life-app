@@ -1,25 +1,20 @@
+//cleaned code
 import { useState } from "react";
-import {
-  Box,
-  Button,
-  TextField,
-  useMediaQuery,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import { Formik } from "formik";
-import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { Box, Button, TextField, useMediaQuery, Typography, useTheme } from "@mui/material";
+import { Formik } from "formik";
+import * as yup from "yup";
+
 import { setLogin } from "state";
 
+/* --- Schemas --- */
 const registerSchema = yup.object().shape({
   firstName: yup.string(),
   lastName: yup.string(),
   userName: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
-  //major: yup.string().optional(""),
 });
 
 const loginSchema = yup.object().shape({
@@ -27,32 +22,38 @@ const loginSchema = yup.object().shape({
   password: yup.string().required("required"),
 });
 
-const initialValuesRegister = {
+/* --- Initial Values --- */
+const initialValues = {
   firstName: "",
   lastName: "",
   userName:"",
   email: "",
   password: "",
-  //major: "",
 };
 
-const initialValuesLogin = {
-  email: "",
-  password: "",
-};
-
+/* --- Form Component ---*/
 const Form = () => {
-  const [pageType, setPageType] = useState("login");
-  const { palette } = useTheme();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const isNonMobile = useMediaQuery("(min-width:600px)");
-  const isLogin = pageType === "login";
-  const isRegister = pageType === "register";
 
+/* --- State & Global Data --- */
+    const [pageType, setPageType] = useState("login");
+    const { palette } = useTheme();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const isNonMobile = useMediaQuery("(min-width:600px)");
+    const isLogin = pageType === "login";
+    const isRegister = pageType === "register";
+
+    const handleFormSubmit = async (values, onSubmitProps) => {
+        if (isLogin) await login(values, onSubmitProps);
+        if (isRegister) await register(values, onSubmitProps);
+    };
+
+/* --- API CALLS --- */
+    // Register a User
   const register = async (values, onSubmitProps) => {
     // this allows us to send form info with image
     const formData = new FormData();
+
     for (let value in values) {
       formData.append(value, values[value]);
     }
@@ -64,66 +65,55 @@ const Form = () => {
         body: formData,
       }
     );
+
     const savedUser = await savedUserResponse.json();
-    onSubmitProps.resetForm({ values: isRegister ? initialValuesRegister : initialValuesLogin });
+    onSubmitProps.resetForm({ values: initialValues });
 
     if (savedUser) {
       setPageType("login");
     }
   };
-
+  
+    // Login a user
   const login = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values), // this is the credentials
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values), // this is the credentials
     });
+
     const loggedIn = await loggedInResponse.json();
-    onSubmitProps.resetForm({ values: isRegister ? initialValuesRegister : initialValuesLogin });
+
+    onSubmitProps.resetForm({ values: initialValues});
+
     if (loggedIn) {
-      dispatch(
-        setLogin({
-          user: loggedIn.user,
-          token: loggedIn.token,
-        })
-      );
-      navigate("/home");
+        dispatch(
+            setLogin({
+                user: loggedIn.user,
+                token: loggedIn.token,
+            })
+        );
+
+        navigate("/home");
     }
   };
 
-  const handleFormSubmit = async (values, onSubmitProps) => {
-    if (isLogin) await login(values, onSubmitProps);
-    if (isRegister) await register(values, onSubmitProps);
-  };
-
+/* --- RENDER UI --- */
   return (
     <Formik
       onSubmit={handleFormSubmit}
 
       //sets initial page to login and initial values of each box to ""
-      initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
+      initialValues={ initialValues }
 
       //validation of inputs
       validationSchema={isLogin ? loginSchema : registerSchema}
     >
-      {({
-        values,
-        errors,
-        touched,
-        handleBlur,
-        handleChange,
-        handleSubmit,
-        resetForm,
-      }) => (
+      {({ values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm, }) => (
+
         <form onSubmit={handleSubmit}>
-          <Box
-            display="grid"
-            gap="30px"
-            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-            sx={{
-              "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-            }}
-          >
+          <Box display="grid" gap="30px" gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+            sx={{ "& > div": { gridColumn: isNonMobile ? undefined : "span 4" }, }} >
 
                       {/*isRegister gives error somehow*/}
             {isRegister && (
@@ -134,9 +124,7 @@ const Form = () => {
                   onChange={handleChange}
                   value={values.firstName}
                   name="firstName"
-                  error={
-                    Boolean(touched.firstName) && Boolean(errors.firstName)
-                  }
+                  error={Boolean(touched.firstName) && Boolean(errors.firstName)}
                   helperText={touched.firstName && errors.firstName}
                   sx={{ gridColumn: "span 2" }}
                 />
@@ -160,18 +148,7 @@ const Form = () => {
                   helperText={touched.userName && errors.userName}
                   sx={{ gridColumn: "span 4" }}
                 />
-                {/* <TextField
-                  label="Major"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.major}
-                  name="major"
-                  error={
-                    Boolean(touched.major) && Boolean(errors.major)
-                  }
-                  helperText={touched.major && errors.major}
-                  sx={{ gridColumn: "span 4" }}
-                /> */}
+                
               </>
             )}
 
@@ -200,36 +177,22 @@ const Form = () => {
 
           {/* BUTTONS */}
           <Box>
-            <Button
-              fullWidth
-              type="submit"
-              sx={{
-                m: "2rem 0",
-                p: "1rem",
-                backgroundColor: palette.primary.main,
-                color: palette.background.alt,
-                "&:hover": { color: palette.primary.main },
-              }}
-            >
+            <Button fullWidth type="submit"
+              sx={{ m: "2rem 0", p: "1rem", backgroundColor: palette.primary.main, color: palette.background.alt, "&:hover": { color: palette.primary.main },}} >
               {isLogin ? "LOGIN" : "REGISTER"}
             </Button>
+
             <Typography
               onClick={() => {
                 setPageType(isLogin ? "register" : "login");
-                resetForm({ values: isRegister ? initialValuesRegister : initialValuesLogin });
+                resetForm({ values: initialValues });
               }}
-              sx={{
-                textDecoration: "underline",
-                color: palette.primary.main,
-                "&:hover": {
-                  cursor: "pointer",
-                  color: palette.primary.light,
-                },
-              }}
+              sx={{ textDecoration: "underline", color: palette.primary.main, "&:hover": { cursor: "pointer", color: palette.primary.light, },}}
             >
-              {isLogin
-                ? "Don't have an account? Sign Up here."
-                : "Already have an account? Login here."}
+                  {isLogin
+                    ? "Don't have an account? Sign Up here."
+                    : "Already have an account? Login here."}
+
             </Typography>
           </Box>
         </form>
