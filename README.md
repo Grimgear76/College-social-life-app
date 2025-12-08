@@ -15,5 +15,6 @@ We are making college social life app that connects students, faculty, and organ
 - npm install react-redux @reduxjs/toolkit redux-persist react-dropzone dotenv formik yup react-router-dom@6 @mui/material @emotion/react @emotion/styled @mui/icons-material
 
 
-
+# Documentation
+https://github.com/Grimgear76/College-social-life-app/wiki
 
