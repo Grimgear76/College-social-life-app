@@ -10,19 +10,26 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { Server as SocketIO } from "socket.io";
 import { createServer } from "node:http";
-import authRoutes from "./routes/auth.js";
-import userRoutes from "./routes/users.js";
-import postRoutes from "./routes/posts.js";
-import { register } from "./controllers/auth.js";
-import { createPost } from "./controllers/posts.js";
-import { verifyToken } from "./middleware/auth.js";
-import { sanitize } from "./middleware/sanitization.js";
+import { body, param, query, validationResult } from "express-validator";
+
+    // Models
 import User from "./models/User.js";
 import Post from "./models/Post.js";
 
+    // Routes
+import authRoutes from "./routes/auth.js";
+import userRoutes from "./routes/users.js";
+import postRoutes from "./routes/posts.js";
 
+    // Controllers
+import { register } from "./controllers/auth.js";
+import { createPost, deletePostSocket } from "./controllers/posts.js";
 
-/* CONFIGURATIONS */
+    // Middleware
+import { verifyToken } from "./middleware/auth.js";
+import { globalLimiter } from "./middleware/ratelimit.js";
+
+/* --- CONFIGURATIONS --- */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
@@ -36,43 +43,30 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
-//app.use(sanitize);
+app.use(globalLimiter);
+
+
+
 
 const io = new SocketIO(server, { cors: { origin: "*" }, });
 
 app.use((req, res, next) => { req.io = io; next(); });
 
-// test socket connection
+/* --- SOCKET CONNECTIONS & EVENTS --- */
 io.on("connection", (socket) => {
-        /* SOCKET CONNECTION */
-        console.log("A user connected:", socket.id);
+    console.log("User connected:", socket.id);
 
-        // Listen for new posts from clients
-        socket.on("newPost", (post) => {
-            // Broadcast the post to everyone except sender
-            socket.broadcast.emit("receivePost", post);
-        });
+    socket.on("deletePost", (postId) => {
+        deletePostSocket(postId, io);
+    });
 
-        // Listen for new comments
-        socket.on("newComment", ({ postId, comment }) => {
-            socket.broadcast.emit("receiveComment", { postId, comment });
-        });
-
-        // Listen for likes
-        socket.on("likePost", (updatedPost) => {
-            socket.broadcast.emit("receiveLike", updatedPost);
-        });
-
-    socket.on("deletePost", ({ postId }) => {
-            socket.broadcast.emit("receiveDelete", postId);
-        })
-
-        socket.on("disconnect", () => {
-            console.log("A user disconnected:", socket.id);
-        });
+    socket.on("disconnect", () => {
+        console.log("User disconnected:", socket.id);
+    });
 });
 
-/* FILE STORAGE */
+
+/* --- FILE STORAGE --- */
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/assets");
@@ -85,20 +79,20 @@ const upload = multer({ storage });
 
 
 
-/* ROUTES WITH FILES */
+/* --- ROUTES WITH FILES --- */
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 
 
-/* ROUTES */
+/* --- ROUTES --- */
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes); 
 app.use("/posts", postRoutes);
 
 
 
-/* MONGOOSE SETUP */
+/* --- MONGOOSE SETUP --- */
 const PORT = process.env.PORT || 6001;
 mongoose
   .connect(process.env.MONGO_URL)
