@@ -1,5 +1,5 @@
-//cleaned code
-//global state manager (every component updates instantly)
+//Cleaned Code
+//Global State Manager (every component updates instantly)
 import { createSlice } from '@reduxjs/toolkit';
 
 /* Initial State  */

@@ -1,11 +1,11 @@
-//makes flex container to help with displaying items
+//Makes Flex Container to help with Displaying Items
 
 import { Box } from "@mui/material";
 import { styled } from "@mui/system";
 
-//FlexBetween is a container that allows for better frontend styling
+//FlexBetween is a Container that Allows for Better Frontend Styling
 const FlexBetween = styled(Box)({
-    display: "flex", //makes container dynamic and children(flex items) flexable 
+    display: "flex", //Makes Container Dynamic and Children(flex items) Flexable 
     justifyContent: "space-between", //spreads horizontal correctly
     alignItems: "center", //centers vertically
 });

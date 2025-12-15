@@ -1,4 +1,5 @@
-//app.jsx has the job of keeping the app running smoothly after main.jsx sets up the webapp
+// app.jsx has the job of keeping the app running smoothly 
+// after main.jsx sets up the webapp
 import { useEffect, useMemo } from "react";
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";

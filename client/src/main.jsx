@@ -1,4 +1,5 @@
-//Main.jsx has the job of sets up the webapp for the app.jsx file to be able to run it smoothly.
+// Main.jsx has the job of sets up the webapp for the 
+// app.jsx file to be able to run it smoothly.
 
 import React from "react";
 import ReactDOM from "react-dom/client";

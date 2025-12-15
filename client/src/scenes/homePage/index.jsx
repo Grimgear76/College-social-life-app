@@ -1,4 +1,4 @@
-//cleaned code
+//Cleaned Code
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Box, useMediaQuery } from "@mui/material";
