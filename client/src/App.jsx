@@ -1,4 +1,3 @@
-//cleaned code
 //app.jsx has the job of keeping the app running smoothly after main.jsx sets up the webapp
 import { useEffect, useMemo } from "react";
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
@@ -13,10 +12,10 @@ import HomePage from "scenes/homePage";
 import LoginPage from "scenes/loginPage";
 import ProfilePage from "scenes/profilePage";
 
-/* --- App --- */
+/* App  */
 function App() {
 
-/* --- State & Global Data --- */
+/* State & Global Data */
 
         // Read global Redux state
     const mode = useSelector((state) => state.mode);
@@ -27,7 +26,7 @@ function App() {
     const isAuth = Boolean(token);
   
 
-/* --- EFFECTS & DATA FETCHING --- */
+/* EFFECTS & DATA FETCHING */
         // Socket.io connection based on Auth State
     useEffect(() => {
 
@@ -43,7 +42,7 @@ function App() {
     }, [isAuth, token]);
 
 
-/* --- Render UI --- */
+/*  Render UI */
   return (
     <div className="app">
       <BrowserRouter>

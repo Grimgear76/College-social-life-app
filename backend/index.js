@@ -91,7 +91,7 @@ app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 
 
-
+/* --- URL hidden in .env --- */
 /* --- MONGOOSE SETUP --- */
 const PORT = process.env.PORT || 6001;
 mongoose

@@ -2,7 +2,7 @@
 //global state manager (every component updates instantly)
 import { createSlice } from '@reduxjs/toolkit';
 
-/* --- Initial State --- */
+/* Initial State  */
 const initialState = { //Global State and accessible globally
     mode: "light",
     user: null,
@@ -10,7 +10,7 @@ const initialState = { //Global State and accessible globally
     posts: [],
 };
 
-/* --- State Actions --- */
+/* State Actions */
 //these are our actions{ functions of our app }
 export const authSlice = createSlice({
     name: "auth",

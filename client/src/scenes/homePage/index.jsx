@@ -12,17 +12,17 @@ import MyPostWidget from "scenes/widgets/MyPostWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 
-/* --- HomePage Scene --- */
+/*  HomePage Scene  */
 const HomePage = () => {
 
-/* --- State & Global Data --- */
+/*  State & Global Data  */
     const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
     const { _id, picturePath } = useSelector((state) => state.user);
 
     const [searchTerm, setSearchTerm] = useState("");
   
-/* --- Render UI --- */
+/* Render UI */
   return (
     <Box>
             {/* Navbar and background particles */}

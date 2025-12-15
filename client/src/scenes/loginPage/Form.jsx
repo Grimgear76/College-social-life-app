@@ -8,7 +8,7 @@ import * as yup from "yup";
 
 import { setLogin } from "state";
 
-/* --- Schemas --- */
+/*  Schemas  */
 const registerSchema = yup.object().shape({
   firstName: yup.string(),
   lastName: yup.string(),
@@ -22,7 +22,7 @@ const loginSchema = yup.object().shape({
   password: yup.string().required("required"),
 });
 
-/* --- Initial Values --- */
+/* Initial Values */
 const initialValues = {
   firstName: "",
   lastName: "",
@@ -31,10 +31,10 @@ const initialValues = {
   password: "",
 };
 
-/* --- Form Component ---*/
+/*  Form Component */
 const Form = () => {
 
-/* --- State & Global Data --- */
+/*  State & Global Data  */
     const [pageType, setPageType] = useState("login");
     const { palette } = useTheme();
     const dispatch = useDispatch();
@@ -48,7 +48,7 @@ const Form = () => {
         if (isRegister) await register(values, onSubmitProps);
     };
 
-/* --- API CALLS --- */
+/*  API CALLS  */
     // Register a User
   const register = async (values, onSubmitProps) => {
     // this allows us to send form info with image
@@ -98,7 +98,7 @@ const Form = () => {
     }
   };
 
-/* --- RENDER UI --- */
+/*  RENDER UI */
   return (
     <Formik
       onSubmit={handleFormSubmit}

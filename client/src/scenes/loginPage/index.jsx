@@ -3,15 +3,15 @@ import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 
 import Form from "./Form";
 
-/* --- LoginPage Scene --- */
+/*  LoginPage Scene  */
 const LoginPage = () => {
 
-/* --- State & Global Data --- */
+/*  State & Global Data  */
     const theme = useTheme();
 
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
-/* --- Render UI --- */
+/*  Render UI  */
   return (
     <Box>
             {/* Title */}
