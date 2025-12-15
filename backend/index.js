@@ -29,7 +29,7 @@ import { createPost, deletePostSocket } from "./controllers/posts.js";
 import { verifyToken } from "./middleware/auth.js";
 import { globalLimiter } from "./middleware/ratelimit.js";
 
-/* --- CONFIGURATIONS --- */
+/*  CONFIGURATIONS  */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
@@ -52,7 +52,7 @@ const io = new SocketIO(server, { cors: { origin: "*" }, });
 
 app.use((req, res, next) => { req.io = io; next(); });
 
-/* --- SOCKET CONNECTIONS & EVENTS --- */
+/*  SOCKET CONNECTIONS & EVENTS  */
 io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
 
@@ -66,7 +66,7 @@ io.on("connection", (socket) => {
 });
 
 
-/* --- FILE STORAGE --- */
+/*  FILE STORAGE  */
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/assets");
@@ -78,21 +78,19 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 
-
-/* --- ROUTES WITH FILES --- */
+/*  ROUTES WITH FILES  */
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 
-
-/* --- ROUTES --- */
+/*  ROUTES  */
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes); 
 app.use("/posts", postRoutes);
 
 
-/* --- URL hidden in .env --- */
-/* --- MONGOOSE SETUP --- */
+/*  URL hidden in .env  */
+/*  MONGOOSE SETUP  */
 const PORT = process.env.PORT || 6001;
 mongoose
   .connect(process.env.MONGO_URL)
